@@ -4,17 +4,25 @@
 $this->pageTitle=Yii::app()->name;
 ?>
 
-<h1>Welcome to <i><?php echo CHtml::encode(Yii::app()->name); ?></i></h1>
-
-<p>Congratulations! You have successfully created your Yii application.</p>
-
-<p>You may change the content of this page by modifying the following two files:</p>
-<ul>
-	<li>View file: <code><?php echo __FILE__; ?></code></li>
-	<li>Layout file: <code><?php echo $this->getLayoutFile('main'); ?></code></li>
-</ul>
-
-<p>For more details on how to further develop this application, please read
-the <a href="http://www.yiiframework.com/doc/">documentation</a>.
-Feel free to ask in the <a href="http://www.yiiframework.com/forum/">forum</a>,
-should you have any questions.</p>
+<div id="features" class="span9 wrapper">
+	<div class="info-box">
+		<img alt="wspólny e-mail" src="<?php echo Yii::app()->baseUrl; ?>/images/mail.png">
+		<h3>Wspólny adres e-mail</h3>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pulvinar ante quis urna feugiat egestas. Suspendisse nisi massa, feugiat placerat pharetra a, semper sed nisi. Ut vulputate euismod suscipit.</p>
+	</div>
+	<div class="info-box">
+		<img alt="kalendarz" src="<?php echo Yii::app()->baseUrl; ?>/images/calendar.png">
+		<h3>Kalendarz grupowy</h3>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pulvinar ante quis urna feugiat egestas. Suspendisse nisi massa, feugiat placerat pharetra a, semper sed nisi. Ut vulputate euismod suscipit.</p>
+	</div>
+	<div class="info-box">
+		<img alt="forum" src="<?php echo Yii::app()->baseUrl; ?>/images/notes.png">
+		<h3>Forum</h3>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pulvinar ante quis urna feugiat egestas. Suspendisse nisi massa, feugiat placerat pharetra a, semper sed nisi. Ut vulputate euismod suscipit.</p>
+	</div>
+	<div class="info-box">
+		<img alt="skład plików" src="<?php echo Yii::app()->baseUrl; ?>/images/storage.png">
+		<h3>Skład plików</h3>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pulvinar ante quis urna feugiat egestas. Suspendisse nisi massa, feugiat placerat pharetra a, semper sed nisi. Ut vulputate euismod suscipit.</p>
+	</div>
+</div>

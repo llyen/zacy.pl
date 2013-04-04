@@ -1,0 +1,17 @@
+@import url('reset.css');
+
+/*
+ style
+*/
+
+body { background: #e7e8e9 url('../images/bg_pattern.png') repeat; }
+
+div#page { padding: 0; margin: 0; }
+
+div.wrapper { padding: 0; margin: 0 auto; float: none; }
+
+div#header { min-height: 100px; }
+
+div#logo { width: 185px; margin-top: 80px; }
+
+div#content-container { margin-bottom: 50px; height: 471px; background: #f5f5f6 url('../images/content_bg.png') repeat-x; }
