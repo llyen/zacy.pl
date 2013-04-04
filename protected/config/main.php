@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'żacy.pl',
+	'name'=>'e-zacy.pl',
 
 	// preloading 'log' component
 	'preload'=>array('log','bootstrap'),
@@ -53,7 +53,7 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=zacy_pl',
+			'connectionString' => 'mysql:host=localhost;dbname=e-zacy_pl',
 			'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => '',
