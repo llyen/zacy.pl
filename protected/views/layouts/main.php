@@ -44,12 +44,15 @@
 				<p>Poznaj narzędzia, dzięki którym wymiana informacji w Twojej grupie będzie nie tylko sprawniejsza, ale również bardziej wiarygodna.</p>
 				<p>
 					<?php
-					$this->widget('bootstrap.widgets.TbButton', array(
-						'type'=>'primary',
-						'size'=>'large',
-						'label'=>'Zaloguj się',
-						'url'=>array('site/login'),
-					));
+					if(Yii::app()->user->isGuest)
+					{
+						$this->widget('bootstrap.widgets.TbButton', array(
+							'type'=>'primary',
+							'size'=>'large',
+							'label'=>'Zaloguj się',
+							'url'=>array('site/login'),
+						));
+					}
 					?>
 				</p>
 			</div>

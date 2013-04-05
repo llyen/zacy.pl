@@ -72,9 +72,9 @@ class Users extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'group_id' => 'Group',
-			'username' => 'Username',
-			'password' => 'Password',
+			'group_id' => 'Grupa',
+			'username' => 'Nazwa użytkownika/e-mail',
+			'password' => 'Hasło',
 		);
 	}
 

@@ -10,24 +10,23 @@ $this->menu=array(
 	array('label'=>'Odebrane', 'url'=>array('messages/index'), 'active'=>true, 'icon'=>'envelope'),	
 	);
 ?>
-<h3> - odebrane wiadomości</h3>
+<h3>grupa test - odebrane wiadomości</h3>
 <?php
 
 if($mbox = @imap_open("{e-zacy.pl:110/pop3/novalidate-cert}INBOX", 'test@e-zacy.pl', 'test', OP_SILENT))
+{
+	$MC = imap_check($mbox);
+
+	$result = imap_fetch_overview($mbox,"1:{$MC->Nmsgs}",0);
+	foreach ($result as $overview)
 	{
-	$check = @imap_mailboxmsginfo($mbox);
-	if(is_numeric($check->Nmsgs))
-		{
-		for($i = 1; $i <= $check->Nmsgs; $i++)
-			{
-			var_dump(@imap_fetch_overview($mbox, $i, 0));
-			}
-		}
+	    echo "#{$overview->msgno} ({$overview->date}) - Od: {$overview->from} - Temat: {$overview->subject}\n<br>";
+	}
 	@imap_close($mbox);
-	}
+}
 else
-	{
-		var_dump(imap_errors());
-	}
+{
+	var_dump(imap_errors());
+}
 
 ?>
