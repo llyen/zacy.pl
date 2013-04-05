@@ -1,5 +1,5 @@
 @import url('reset.css');
-
+@import url('slidesjs.css');
 /*
  style
 */
@@ -12,11 +12,27 @@ div.wrapper { padding: 0; margin: 0 auto; float: none; }
 
 div#header { min-height: 400px; }
 
-div#logo { width: 185px; margin-top: 80px; }
+div#logo { width: 185px; float: left; margin-top: 80px; }
+
+div#control { width: 540px; float: right; /*margin-top: 40px;*/ font: normal 16px Arial; }
+
+div#login-info { width: 250px; height: 40px; float: right; padding: 30px 0; font: normal 11px Arial; text-align: left; }
+div#login-info a { text-decoration: none; color: #588dca; }
+div#login-info a:hover { border-bottom: 1px dashed #588dca; }
+
+div#menu ul { float: right; }
+div#menu ul li { float: left; margin-right: 25px; }
+div#menu ul li a { text-decoration: none; color: #656769; }
+div#menu ul li a:hover { border-bottom: 1px dashed #588dca; color: #588dca; }
+
+div#splash { clear: both; }
 
 div#about { width: 400px; float: left; }
 div#about h1 { margin: 50px 0 20px 0; font: bold 24px Arial; text-align: left; }
 div#about p { font: normal 18px Arial; text-align: justify; }
+div#about p:last-child { text-align: center; margin: 25px 0; }
+
+div#carousel { display: none; }
 
 div#middle { height: 17px; background: #f5f5f6 url('../images/middle.png') repeat-x; }
 
