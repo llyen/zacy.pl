@@ -22,9 +22,9 @@
 		<div id="control">
 			<div id="login-info">
 				<?php if(Yii::app()->user->isGuest): ?>
-				Nie jesteś zalogowany.<br>Możesz <?php echo CHtml::link('założyć konto dla grupy', array('groups/register')); ?> i&nbsp;administrować dostępem do niego.
+				Nie jesteś zalogowany.<br>Możesz <?php echo CHtml::link('założyć konto dla grupy', array('groups/register')); ?> i&nbsp;administrować&nbsp;dostępem do niego.
 				<?php else: ?>
-				Jesteś zalogowany jako <em><?php echo Yii::app()->user->username; ?></em><br><?php echo CHtml::link('Wyloguj się', array('site/logout')); ?>
+				Jesteś zalogowany jako <em><?php echo Yii::app()->user->name; ?></em><br><?php echo CHtml::link('Wyloguj się', array('site/logout')); ?>
 				<?php endif; ?>
 			</div>
 			<div id="menu">

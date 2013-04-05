@@ -33,6 +33,7 @@ return array(
 	// application components
 	'components'=>array(
 		'user'=>array(
+                        'class'=>'WebUser',
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 		),
@@ -40,6 +41,7 @@ return array(
 		
 		'urlManager'=>array(
 			'urlFormat'=>'path',
+                        'showScriptName'=>false,
 			'rules'=>array(
                                 '/login'=>'site/login',
                                 '/logout'=>'site/logout',
@@ -82,6 +84,11 @@ return array(
 				*/
 			),
 		),
+
+                'authManager'=>array(
+                        'class'=>'CDbAuthManager',
+                        'connectionID'=>'db',
+                ),
                 
                 'bootstrap'=>array(
                         'class'=>'ext.bootstrap.components.Bootstrap',
