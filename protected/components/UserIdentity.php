@@ -8,6 +8,7 @@
 class UserIdentity extends CUserIdentity
 {
 	private $_id;
+	//private $_gid;
 		
 	/**
 	 * Authenticates a user.
@@ -23,6 +24,7 @@ class UserIdentity extends CUserIdentity
 		else
 		{
 		    $this->_id = $record->id;
+		    //$this->_gid = $record->group_id;
 		    $this->errorCode = self::ERROR_NONE;
 		}
 		return !$this->errorCode;
@@ -32,5 +34,10 @@ class UserIdentity extends CUserIdentity
 	{
 		return $this->_id;
 	}
+	
+	//public function getGid()
+	//{
+	//	return $this->_gid;
+	//}
 
 }

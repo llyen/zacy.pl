@@ -43,10 +43,15 @@ class MessagesController extends Controller
 	
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Posts');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+		$group = Groups::model()->findByPk(Yii::app()->user->gid);
+		
+		//$mailbox = array();
+		$mailbox['name'] = $group->name;
+		$mailbox['pass'] = $group->password;
+		
+		$this->render('index', array(
+				'mailbox' => $mailbox,
+			));
 	}
 
 }
