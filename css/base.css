@@ -32,8 +32,11 @@ div#content-container { clear: both; margin-bottom: 50px; padding: 0 0 25px 0;/*
 div#sidebar { font-family: "Helvetica Neue", Helvetica, Arial; }
 div#sidebar ul li a { font-size: 12px; }
 
-div#content-body { font: normal 13px Arial;/*float: right;*/ }
+div#content-body { font: normal 13px Arial;/*float: right;*/ line-height: 1.25em; }
+div#content-body p { text-align: justify; }
+div#content-body strong { font-weight: bold; }
 div#content-body h3 { margin-top: 30px; margin-bottom: 10px; font: bold 16px Arial; color: #656769; }
+div#content-body h4 { font-weight: bold; }
 
 div#content-body table th, div#content-body table td { text-align: center; }
 div#content-body table thead { background: #757779; color: #fff; }
