@@ -104,5 +104,7 @@ return array(
                 
                 'hostURL'=>'e-zacy.pl',
                 'hostPort'=>110,
+                'hostLogin'=>'***',
+                'hostPassword'=>'***',
 	),
 );

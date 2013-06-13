@@ -17,21 +17,23 @@
 
 	<div id="header" class="span9 wrapper">
 	        <div id="logo"><img alt="<?php echo Yii::app()->name; ?>" src="<?php echo Yii::app()->baseUrl; ?>/images/logotype.png"></div>
-	    	<div id="control">
+	    	<div id="control" <?php if(!Yii::app()->user->isGuest && Yii::app()->user->gid === null || !Yii::app()->user->isGuest && !Yii::app()->user->isConfirmed()): ?> style="width: 100px;" <?php endif; ?>>
 			<div id="login-info">
 				<?php if(Yii::app()->user->isGuest): ?>
-				Nie jesteś zalogowany.<br>Możesz <?php echo CHtml::link('założyć konto dla grupy', array('groups/register')); ?> i&nbsp;administrować&nbsp;dostępem do niego.
+				Nie jesteś zalogowany.<br><?php echo CHtml::link('Zarejestruj się', array('users/register')); ?> aby&nbsp;uzyskać&nbsp;dostęp do podstawowych funkcjonalności serwisu.
 				<?php else: ?>
 				Jesteś zalogowany jako <em><?php echo Yii::app()->user->name; ?></em><br><?php echo CHtml::link('Wyloguj się', array('site/logout')); ?>
 				<?php endif; ?>
 			</div>
 			<div id="menu">
 			<ul>
-				<li><?php echo CHtml::link('strona główna', Yii::app()->baseUrl); ?></li>
+				<?php if(!Yii::app()->user->isGuest): ?> <li><?php echo CHtml::link('grupa', array('groups/index')); ?></li><?php endif; ?>
+				<?php if(!Yii::app()->user->isGuest && Yii::app()->user->gid !== null && Yii::app()->user->isConfirmed()): ?>
 				<li><?php echo CHtml::link('wiadomości', array('messages/index')); ?></li>
 				<li><?php echo CHtml::link('forum', array('forums/index')); ?></li>
 				<li><?php echo CHtml::link('skład plików', array('storages/index')); ?></li>
 				<li><?php echo CHtml::link('kalendarz', array('calendars/index')); ?></li>
+				<?php endif; ?>
 			</ul>
 			</div><!-- menu -->
 		</div>

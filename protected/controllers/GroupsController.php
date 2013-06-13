@@ -32,7 +32,7 @@ class GroupsController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','join','update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -65,17 +65,79 @@ class GroupsController extends Controller
 		$model=new Groups;
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['Groups']))
 		{
 			$model->attributes=$_POST['Groups'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			{
+				$sock = new HTTPSocket;
+				$sock->connect(Yii::app()->params['hostURL'], 2222);
+				$sock->set_login(Yii::app()->params['hostLogin'],Yii::app()->params['hostPassword']);
+ 
+				$sock->query('/CMD_API_POP',
+				array(
+					'action'=>'create',
+					'domain'=>Yii::app()->params['hostURL'],
+					'quota'=>25,
+					'passwd'=>$model->password,
+					'user'=>$model->name,
+			        ));
+ 
+				$result = $sock->fetch_parsed_body();
+				
+				$user = Users::model()->findByPk(Yii::app()->user->id);
+				$user->group_id = $model->id;
+				$user->confirmed = 1;
+				$forum = new Forums();
+				$forum->group_id = $model->id;
+				$forum->name = $model->name;
+				$calendar = new Calendars();
+				$calendar->group_id = $model->id;
+				$storage = new Storages();
+				$storage->group_id = $model->id;
+				$storage->path = $model->name.'/';
+				if($user->save() && $forum->save() && $calendar->save() && $storage->save())
+				{
+					Yii::app()->user->setFlash('info', '<strong>Sukces.</strong> Utworzono nową grupę.');
+					$this->redirect(array('groups/index'));	
+				}
+			}
 		}
 
 		$this->render('create',array(
 			'model'=>$model,
+		));
+	}
+	
+	public function actionJoin()
+	{
+		//$groups = Groups::model()->find(array('select'=>'id,name'));
+		//$dataProvider = new CArrayDataProvider($groups);
+		$groups = Groups::model()->findAll();
+		$dataProvider = array();
+		foreach($groups as $g)
+			$dataProvider[] = $g->name;
+		
+		$model = Users::model()->findByPk(Yii::app()->user->id);
+		
+		if($_POST && $_POST['group_id']!='')
+		{
+			foreach($groups as $g)
+				$dataProvider[$g->name] = $g->id;
+			//$model = Users::model()->findByPk(Yii::app()->user->id);
+			$model->group_id = $dataProvider[$_POST['group_id']];
+			if($model->save())
+			{
+				Yii::app()->user->setFlash('info', '<strong>Sukces.</strong> Twoja prośba o dołączenie do wybranej grupy oczekuje na akceptację jej administratora.');
+				$this->redirect(array('groups/index'));
+			}
+		}
+		
+		$this->render('join', array(
+			'dataProvider' => $dataProvider,
+			'model' => $model,
 		));
 	}
 

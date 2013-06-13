@@ -75,7 +75,7 @@ class Groups extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'admin' => 'Admin',
-			'name' => 'Name',
+			'name' => 'Nazwa',
 			'password' => 'Password',
 		);
 	}
@@ -99,5 +99,12 @@ class Groups extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+	
+	public function beforeValidate()
+	{
+		$this->admin = Users::model()->findByPk(Yii::app()->user->id)->username;
+		$this->password = substr(strrev(str_replace('.', '', uniqid(time().md5(time()).sha1(time()), true))), 0, 10);
+		return parent::beforeValidate();
 	}
 }
