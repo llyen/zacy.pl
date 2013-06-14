@@ -32,7 +32,7 @@
 				<li><?php echo CHtml::link('wiadomości', array('messages/index')); ?></li>
 				<li><?php echo CHtml::link('forum', array('threads/index')); ?></li>
 				<li><?php echo CHtml::link('skład plików', array('files/index')); ?></li>
-				<li><?php echo CHtml::link('kalendarz', array('events/index')); ?></li>
+				<li><?php echo CHtml::link('wydarzenia', array('events/index')); ?></li>
 				<?php endif; ?>
 			</ul>
 			</div><!-- menu -->

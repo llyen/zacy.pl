@@ -8,6 +8,7 @@
  * @property integer $group_id
  * @property string $username
  * @property string $password
+ * @property integer $confirmed
  *
  * The followings are the available model relations:
  * @property Posts[] $posts
@@ -43,7 +44,8 @@ class Users extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('username, password', 'required'),
-			array('group_id', 'numerical', 'integerOnly'=>true),
+			array('username','unique'),
+			array('group_id, confirmed', 'numerical', 'integerOnly'=>true),
 			array('username, password', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -73,8 +75,9 @@ class Users extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'group_id' => 'Grupa',
-			'username' => 'Nazwa użytkownika/e-mail',
+			'username' => 'Nazwa użytkownika',
 			'password' => 'Hasło',
+			'confirmed' => 'Potwierdzony',
 		);
 	}
 
@@ -91,6 +94,7 @@ class Users extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('group_id',$this->group_id);
+		$criteria->compare('confirmed',$this->confirmed);
 		$criteria->compare('username',$this->username,true);
 		$criteria->compare('password',$this->password,true);
 
@@ -98,4 +102,14 @@ class Users extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	
+	public function beforeSave()
+        {
+		if($this->isNewRecord)
+		{
+			$pass = sha1(md5($this->password));
+			$this->password = $pass;
+		}
+		return true;
+        }
 }

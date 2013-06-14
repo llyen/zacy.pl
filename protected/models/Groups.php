@@ -46,6 +46,7 @@ class Groups extends CActiveRecord
 			array('admin, name, password', 'required'),
 			array('admin', 'length', 'max'=>255),
 			array('name, password', 'length', 'max'=>100),
+			array('name','unique'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, admin, name, password', 'safe', 'on'=>'search'),

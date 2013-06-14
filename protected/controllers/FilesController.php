@@ -156,7 +156,11 @@ class FilesController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Files');
+		//$dataProvider=new CActiveDataProvider('Files');
+		$storage = Yii::app()->db->createCommand('select id from storages where group_id='.Yii::app()->user->gid)->queryAll();
+		$files = Yii::app()->db->createCommand('select id, name from files where storage_id='.(int)$storage[0]['id'])->queryAll();
+		$dataProvider = new CArrayDataProvider($files);
+		
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));

@@ -6,41 +6,23 @@
 
 <div class="form">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'events-form',
-	'enableAjaxValidation'=>false,
+	'enableAjaxValidation'=>true,
+	'type'=>'vertical',
 )); ?>
-
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'calendar_id'); ?>
-		<?php echo $form->textField($model,'calendar_id'); ?>
-		<?php echo $form->error($model,'calendar_id'); ?>
+		<?php echo $form->textFieldRow($model,'name',array('size'=>60,'maxlength'=>255)); ?>
+
+		<?php echo $form->html5EditorRow($model, 'description', array('class'=>'span3', 'rows'=>5, 'height'=>'200', 'options'=>array('color'=>true))); ?>
+
+		<?php echo $form->datePickerRow($model,'event_date',array('options'=>array('format'=>'yyyy-mm-dd'))); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'name'); ?>
-		<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'name'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50)); ?>
-		<?php echo $form->error($model,'description'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'event_date'); ?>
-		<?php echo $form->textField($model,'event_date'); ?>
-		<?php echo $form->error($model,'event_date'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+	<div class="form-actions">
+		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>'Zapisz')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

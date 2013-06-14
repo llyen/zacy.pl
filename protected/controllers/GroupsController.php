@@ -95,7 +95,7 @@ class GroupsController extends Controller
 				$storage->group_id = $model->id;
 				$storage->path = $model->name.'/';
 				
-				$path = Yii::app()->basePath.'/../'.$storage->path.'/';
+				$path = Yii::app()->basePath.'/../storages/'.$storage->path.'/';
 				if(!is_dir($path))
 				{
 					mkdir($path, 0755, true);

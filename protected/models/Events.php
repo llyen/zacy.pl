@@ -71,9 +71,9 @@ class Events extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'calendar_id' => 'Calendar',
-			'name' => 'Name',
-			'description' => 'Description',
-			'event_date' => 'Event Date',
+			'name' => 'Nazwa',
+			'description' => 'Szczegóły',
+			'event_date' => 'Data',
 		);
 	}
 
@@ -97,5 +97,12 @@ class Events extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+	
+	public function beforeValidate()
+	{
+		$calendar = Yii::app()->db->createCommand('select id from calendars where group_id='.Yii::app()->user->gid)->queryAll();
+		$this->calendar_id = (int) $calendar[0]['id'];
+		return parent::beforeValidate();
 	}
 }

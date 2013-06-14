@@ -27,12 +27,8 @@ class EventsController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('index','view','create','update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -65,13 +61,16 @@ class EventsController extends Controller
 		$model=new Events;
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['Events']))
 		{
 			$model->attributes=$_POST['Events'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			{
+				Yii::app()->user->setFlash('success','<strong>Sukces.</strong> Utworzono nowe wydarzenie.');
+				$this->redirect(array('events/index'));
+			}
 		}
 
 		$this->render('create',array(
@@ -122,7 +121,11 @@ class EventsController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Events');
+		//$dataProvider=new CActiveDataProvider('Events');
+		$calendar = Yii::app()->db->createCommand('select id from calendars where group_id='.Yii::app()->user->gid)->queryAll();
+		$events = Yii::app()->db->createCommand('select id, name, description, event_date from events where calendar_id='.(int)$calendar[0]['id'].' order by event_date asc')->queryAll();
+		$dataProvider = new CArrayDataProvider($events);
+		
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));

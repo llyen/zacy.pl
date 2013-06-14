@@ -110,9 +110,10 @@ if($mbox = @imap_open("{".Yii::app()->params['hostURL'].":".Yii::app()->params['
 			case 5: // image
 			case 6: // video
 			case 7: // other
+				$fileHeader = imap_mime_header_decode(getFilenameFromPart($part));
 		                $attachments[] = array(
 		                    'partno' => $partNumber-1,
-		                    'fileName' => mb_convert_encoding(imap_mime_header_decode(getFilenameFromPart($part))[0]->text, 'utf-8', 'iso-8859-2'),
+		                    'fileName' => mb_convert_encoding($fileHeader[0]->text, 'utf-8', 'iso-8859-2'),
 		                );
 			break;
 	

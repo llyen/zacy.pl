@@ -79,7 +79,8 @@ class MessagesController extends Controller
 
 			$encoding = $structure->parts[$partno]->encoding;
 			//extract file name from headers
-			$fileName = imap_mime_header_decode(strtolower($structure->parts[$partno]->dparameters[0]->value))[0]->text;
+			$fileHeader = imap_mime_header_decode(strtolower($structure->parts[$partno]->dparameters[0]->value));
+			$fileName = $fileHeader[0]->text;
 			//extract attachment from email body
 			$fileSource = base64_decode(imap_fetchbody($mbox, $msgno, $partno+1));
 			
