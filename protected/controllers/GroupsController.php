@@ -182,8 +182,16 @@ class GroupsController extends Controller
 	{
 		//$members = Users::model()->findByAttributes(array('group_id' => Yii::app()->user->gid));
 		//$dataProvider=new CActiveDataProvider('Groups');
-		$members = Yii::app()->db->createCommand('select id,username from users where confirmed=1 and group_id='.Yii::app()->user->gid)->queryAll();
-		$dataProvider = new CArrayDataProvider($members);
+		if(Yii::app()->user->gid !== null)
+		{
+			$members = Yii::app()->db->createCommand('select id,username from users where confirmed=1 and group_id='.Yii::app()->user->gid)->queryAll();
+			$dataProvider = new CArrayDataProvider($members);
+		}
+		else
+		{
+			$dataProvider = '';	
+		}
+		
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
