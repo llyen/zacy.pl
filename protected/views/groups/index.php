@@ -28,6 +28,15 @@ $this->menu=array(
 <h3>Nie należysz jeszcze do żadnej grupy.</h3>
 <p><?php echo CHtml::link('Stwórz', array('groups/create')); ?> własną grupę lub <?php echo CHtml::link('dołącz', array('groups/join')); ?> do istniejącej.</p>
 <?php else: ?>
+<?php
+	$this->widget('bootstrap.widgets.TbLabel', array(
+		'type'=>'info',
+		'label'=>Groups::model()->findByPk(Yii::app()->user->gid)->name.'@'.Yii::app()->params['hostURL'],
+		'htmlOptions'=>array(
+			'style'=>'float: right;',	
+		),
+	));
+?>
 <h3>Członkowie grupy</h3>
 <table>
 	<thead>

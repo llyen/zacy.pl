@@ -73,8 +73,8 @@ class Threads extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'forum_id' => 'Forum',
-			'owner_id' => 'Owner',
-			'name' => 'Name',
+			'owner_id' => 'Autor',
+			'name' => 'Temat',
 		);
 	}
 
@@ -97,5 +97,13 @@ class Threads extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+	
+	public function beforeValidate()
+	{
+		$forum = Yii::app()->db->createCommand('select id from forums where group_id='.Yii::app()->user->gid)->queryAll();
+		$this->forum_id = (int) $forum[0]['id'];
+		$this->owner_id = Yii::app()->user->id;
+		return parent::beforeValidate();
 	}
 }

@@ -3,23 +3,21 @@
 /* @var $data Threads */
 ?>
 
-<div class="view">
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('forum_id')); ?>:</b>
-	<?php echo CHtml::encode($data->forum_id); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('owner_id')); ?>:</b>
-	<?php echo CHtml::encode($data->owner_id); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('name')); ?>:</b>
-	<?php echo CHtml::encode($data->name); ?>
-	<br />
-
-
-</div>
+<tr>
+	<td style="text-align: left;">
+		<?php
+		echo '<img style="margin-right: 15px; vertical-align: top;" alt="szczegóły" src="'.Yii::app()->baseUrl.'/images/folder.png"><a href="'.Yii::app()->createUrl('threads/view', array('id'=>$data['id'])).'">'.$data['name'].'</a>';
+		?>
+	</td>
+	<td>
+		<?php echo $data['owner']; ?>
+	</td>
+	<td>
+		<?php
+		$this->widget('bootstrap.widgets.TbBadge', array(
+			'type'=>'info',
+			'label'=>$data['posts'],
+		));
+		?>
+	</td>
+</tr>

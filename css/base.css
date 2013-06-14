@@ -44,5 +44,14 @@ div#content-body table th, div#content-body table td { text-align: center; }
 div#content-body table thead { background: #757779; color: #fff; }
 div#content-body table tbody tr:nth-child(even) { background: #ddd; }
 div#content-body table tbody tr:nth-child(odd) { background: #ededed; }
+div#content-body table tr td a { text-decoration: none; color: #588dca; }
+div#content-body table tr td a:hover { border-bottom: 1px dashed #588dca; }
+
+div#content-body div.post { padding: 15px 15px 25px 15px; margin: 20px 0; }
+div#content-body div.post:nth-child(even) { background: #ededed; }
+div#content-body div.post:nth-child(odd) { background: #dfdfdf; }
+div#content-body div.owner { border: 1px dashed #588dca; }
+div#content-body div.post span { font: normal 11px Arial; text-align: right; float: right; }
+div#content-body div.post span em { border-bottom: 1px dashed #000; }
 
 div#content-footer { clear: both; }

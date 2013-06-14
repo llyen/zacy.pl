@@ -32,9 +32,9 @@
 				<?php if(!Yii::app()->user->isGuest): ?> <li><?php echo CHtml::link('grupa', array('groups/index')); ?></li><?php endif; ?>
 				<?php if(!Yii::app()->user->isGuest && Yii::app()->user->gid !== null && Yii::app()->user->isConfirmed()): ?>
 				<li><?php echo CHtml::link('wiadomości', array('messages/index')); ?></li>
-				<li><?php echo CHtml::link('forum', array('forums/index')); ?></li>
-				<li><?php echo CHtml::link('skład plików', array('storages/index')); ?></li>
-				<li><?php echo CHtml::link('kalendarz', array('calendars/index')); ?></li>
+				<li><?php echo CHtml::link('forum', array('threads/index')); ?></li>
+				<li><?php echo CHtml::link('skład plików', array('files/index')); ?></li>
+				<li><?php echo CHtml::link('kalendarz', array('events/index')); ?></li>
 				<?php endif; ?>
 			</ul>
 			</div><!-- menu -->

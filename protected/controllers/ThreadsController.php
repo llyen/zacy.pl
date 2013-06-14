@@ -27,12 +27,8 @@ class ThreadsController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('index','view','create','update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -51,8 +47,14 @@ class ThreadsController extends Controller
 	 */
 	public function actionView($id)
 	{
+		$model = $this->loadModel($id);
+		$posts = Yii::app()->db->createCommand('select p.id, t.owner_id, p.author_id, u.username as author, p.content, p.create_date, p.update_date from posts p join threads t on t.id=p.thread_id join users u on u.id=p.author_id where p.thread_id='.$id.' order by p.create_date asc, id asc')->queryAll();
+		$dataProvider = new CArrayDataProvider($posts);
+		
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$model,
+			'dataProvider'=>$dataProvider,
+			'tid'=>$id,
 		));
 	}
 
@@ -63,19 +65,26 @@ class ThreadsController extends Controller
 	public function actionCreate()
 	{
 		$model=new Threads;
-
+		$postModel = new Posts;
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
+		$this->performAjaxValidation($postModel);
 
-		if(isset($_POST['Threads']))
+		if(isset($_POST['Threads']) && isset($_POST['Posts']))
 		{
 			$model->attributes=$_POST['Threads'];
+			$postModel->attributes=$_POST['Posts'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			{
+				$postModel->thread_id = $model->id;
+				if($postModel->save())
+					$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		$this->render('create',array(
 			'model'=>$model,
+			'postModel'=>$postModel,
 		));
 	}
 
@@ -89,7 +98,7 @@ class ThreadsController extends Controller
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['Threads']))
 		{
@@ -122,7 +131,11 @@ class ThreadsController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Threads');
+		//$dataProvider=new CActiveDataProvider('Threads');
+		$forum = Yii::app()->db->createCommand('select id from forums where group_id='.Yii::app()->user->gid)->queryAll();
+		$threads = Yii::app()->db->createCommand('select t.id, u.username as owner, t.name, (select count(*) from posts where thread_id=t.id) as posts from threads t join users u on u.id=t.owner_id where t.forum_id='.(int)$forum[0]['id'])->queryAll();
+		$dataProvider = new CArrayDataProvider($threads);
+		
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));

@@ -5,36 +5,21 @@
 ?>
 
 <div class="form">
-
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'threads-form',
-	'enableAjaxValidation'=>false,
-)); ?>
-
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+		'id'=>'threads-form',
+		'enableAjaxValidation'=>true,
+	        'type'=>'vertical',
+	));
+?>
 
 	<?php echo $form->errorSummary($model); ?>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'forum_id'); ?>
-		<?php echo $form->textField($model,'forum_id'); ?>
-		<?php echo $form->error($model,'forum_id'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'owner_id'); ?>
-		<?php echo $form->textField($model,'owner_id'); ?>
-		<?php echo $form->error($model,'owner_id'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'name'); ?>
-		<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>150)); ?>
-		<?php echo $form->error($model,'name'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+	<?php echo $form->errorSummary($postModel); ?>
+	<?php echo $form->textFieldRow($model,'name',array('size'=>60,'maxlength'=>150)); ?>
+	
+	<?php echo $form->html5EditorRow($postModel, 'content', array('class'=>'span3', 'rows'=>8, 'height'=>'200', 'options'=>array('color'=>true))); ?>
+	
+	<div class="form-actions">
+		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>($model->isNewRecord) ? 'Utwórz' : 'Zapisz')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

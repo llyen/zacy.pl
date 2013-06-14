@@ -73,8 +73,8 @@ class Posts extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'thread_id' => 'Thread',
-			'author_id' => 'Author',
-			'content' => 'Content',
+			'author_id' => 'Autor',
+			'content' => 'Treść',
 			'create_date' => 'Create Date',
 			'update_date' => 'Update Date',
 		);
@@ -101,5 +101,16 @@ class Posts extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+	
+	public function beforeValidate()
+	{
+		$this->author_id = Yii::app()->user->id;
+		$this->update_date=new CDbExpression("NOW()");
+		if($this->isNewRecord)
+		{
+			$this->create_date=new CDbExpression("DATE_FORMAT(NOW(), '%Y-%m-%d')");
+		}
+		return parent::beforeValidate();
 	}
 }

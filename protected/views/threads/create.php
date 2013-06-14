@@ -8,11 +8,12 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Threads', 'url'=>array('index')),
-	array('label'=>'Manage Threads', 'url'=>array('admin')),
+	array('label'=>'FORUM'),
+	array('label'=>'Tematy', 'url'=>array('threads/index'), 'icon'=>'list'),
+	array('label'=>'Nowy temat', 'url'=>array('threads/create'), 'active'=>true, 'icon'=>'comment'),
 );
 ?>
 
-<h1>Create Threads</h1>
+<h3>Nowy temat</h3>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model,'postModel'=>$postModel)); ?>
