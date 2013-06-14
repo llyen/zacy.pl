@@ -59,10 +59,10 @@
 				</p>
 			</div>
 			<div id="carousel">
-				<img src="<?php echo Yii::app()->baseUrl; ?>/images/carousel_1.png">
-				<img src="<?php echo Yii::app()->baseUrl; ?>/images/carousel_2.png">
-				<img src="<?php echo Yii::app()->baseUrl; ?>/images/carousel_1.png">
-				<img src="<?php echo Yii::app()->baseUrl; ?>/images/carousel_2.png">
+				<img src="<?php echo Yii::app()->baseUrl; ?>/images/carousel1.png">
+				<img src="<?php echo Yii::app()->baseUrl; ?>/images/carousel2.png">
+				<img src="<?php echo Yii::app()->baseUrl; ?>/images/carousel3.png">
+				<img src="<?php echo Yii::app()->baseUrl; ?>/images/carousel4.png">
 			</div>
 		</div><!-- splash -->
 		
