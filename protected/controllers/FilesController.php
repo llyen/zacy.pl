@@ -27,12 +27,8 @@ class FilesController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('index','view','create','update','download'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -65,18 +61,56 @@ class FilesController extends Controller
 		$model=new Files;
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['Files']))
 		{
 			$model->attributes=$_POST['Files'];
+			$src=CUploadedFile::getInstance($model, 'src');
+			//$model->name = $src->name;
+			if($src !== null) $model->src = $src->name;
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			{
+				$path = Yii::app()->db->createCommand('select path from storages where id='.$model->storage_id)->queryAll();
+				
+				if($src !== null)
+				{
+					$src->saveAs(Yii::app()->basePath.'/../storages/'.$path[0]['path'].$model->src);
+				}
+				
+				Yii::app()->user->setFlash('success','<strong>Sukces.</strong> Plik został wgrany do składu.');
+				$this->redirect(array('files/index'));
+			}
 		}
 
 		$this->render('create',array(
 			'model'=>$model,
 		));
+	}
+	
+	public function actionDownload($id)
+	{
+		if($id !== null)
+		{
+			$model = $this->loadModel($id);
+			$path = Yii::app()->db->createCommand('select path from storages where id='.$model->storage_id)->queryAll();
+			$file = Yii::app()->basePath.'/../storages/'.$path[0]['path'].$model->src;
+			if (file_exists($file))
+			{
+			    header('Content-Description: File Transfer');
+			    header('Content-Type: application/octet-stream');
+			    header('Content-Disposition: attachment; filename='.basename($file));
+			    header('Content-Transfer-Encoding: binary');
+			    header('Expires: 0');
+			    header('Cache-Control: must-revalidate');
+			    header('Pragma: public');
+			    header('Content-Length: ' . filesize($file));
+			    ob_clean();
+			    flush();
+			    readfile($file);
+			    exit;
+			}
+		}
 	}
 
 	/**

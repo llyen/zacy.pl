@@ -94,6 +94,13 @@ class GroupsController extends Controller
 				$storage = new Storages();
 				$storage->group_id = $model->id;
 				$storage->path = $model->name.'/';
+				
+				$path = Yii::app()->basePath.'/../'.$storage->path.'/';
+				if(!is_dir($path))
+				{
+					mkdir($path, 0755, true);
+				}
+				
 				if($user->save() && $forum->save() && $calendar->save() && $storage->save())
 				{
 					Yii::app()->user->setFlash('info', '<strong>Sukces.</strong> Utworzono nową grupę.');

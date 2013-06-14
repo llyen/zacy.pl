@@ -43,6 +43,7 @@ class Files extends CActiveRecord
 			array('storage_id, name, src', 'required'),
 			array('storage_id', 'numerical', 'integerOnly'=>true),
 			array('name, src', 'length', 'max'=>255),
+			array('src', 'file', 'allowEmpty'=>true, 'maxSize'=>1024*1024*50, 'tooLarge'=>'Rozmiar pliku przekracza dopuszczalną wartość 50MB.'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, storage_id, name, src', 'safe', 'on'=>'search'),
@@ -69,8 +70,8 @@ class Files extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'storage_id' => 'Storage',
-			'name' => 'Name',
-			'src' => 'Src',
+			'name' => 'Nazwa',
+			'src' => 'Plik',
 		);
 	}
 
@@ -93,5 +94,12 @@ class Files extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+	
+	public function beforeValidate()
+	{
+		$storage = Yii::app()->db->createCommand('select id from storages where group_id='.Yii::app()->user->gid)->queryAll();
+		$this->storage_id = (int) $storage[0]['id'];
+		return parent::beforeValidate();
 	}
 }

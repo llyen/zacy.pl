@@ -6,35 +6,22 @@
 
 <div class="form">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'files-form',
-	'enableAjaxValidation'=>false,
-)); ?>
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+		'id'=>'files-form',
+		'enableAjaxValidation'=>true,
+	        'type'=>'horizontal',
+		'htmlOptions'=>array(
+			'enctype'=>'multipart/form-data',	
+		),
+	));
+?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
-	<?php echo $form->errorSummary($model); ?>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'storage_id'); ?>
-		<?php echo $form->textField($model,'storage_id'); ?>
-		<?php echo $form->error($model,'storage_id'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'name'); ?>
-		<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'name'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'src'); ?>
-		<?php echo $form->textField($model,'src',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'src'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+	<?php echo $form->errorSummary($model); ?>	
+	<?php echo $form->textFieldRow($model, 'name'); ?>
+	<?php echo $form->fileFieldRow($model, 'src'); ?>
+	
+	<div class="form-actions">
+		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>'Zapisz')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

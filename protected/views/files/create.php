@@ -8,11 +8,12 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Files', 'url'=>array('index')),
-	array('label'=>'Manage Files', 'url'=>array('admin')),
+	array('label'=>'SKŁAD PLIKÓW'),
+	array('label'=>'Pliki w składzie', 'url'=>array('files/index'), 'icon'=>'th-large'),
+	array('label'=>'Wgraj plik do składu', 'url'=>array('files/create'), 'active'=>true, 'icon'=>'download-alt'),
 );
 ?>
 
-<h1>Create Files</h1>
+<h3>Wybierz plik</h3>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
