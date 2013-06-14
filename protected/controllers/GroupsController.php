@@ -27,12 +27,8 @@ class GroupsController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','join','update'),
+				'actions'=>array('index','applications','confirmApplication','rejectApplication','create','join','update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -184,10 +180,76 @@ class GroupsController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Groups');
+		//$members = Users::model()->findByAttributes(array('group_id' => Yii::app()->user->gid));
+		//$dataProvider=new CActiveDataProvider('Groups');
+		$members = Yii::app()->db->createCommand('select id,username from users where confirmed=1 and group_id='.Yii::app()->user->gid)->queryAll();
+		$dataProvider = new CArrayDataProvider($members);
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
+	}
+	
+	public function actionApplications()
+	{
+		if(Yii::app()->user->isGroupAdmin())
+		{
+			$members = Yii::app()->db->createCommand('select id, username from users where confirmed=0 and group_id='.Yii::app()->user->gid)->queryAll();
+			$dataProvider = new CArrayDataProvider($members);
+			$this->render('applications',array(
+				'dataProvider'=>$dataProvider,
+			));
+		}
+		else
+		{
+			Yii::app()->user->setFlash('error', '<strong>Błąd!</strong> Nie masz uprawnień do korzystania z tej funkcji.');
+			$this->redirect(array('groups/index'));
+		}
+	}
+	
+	public function actionConfirmApplication($uid)
+	{
+		if(Yii::app()->user->isGroupAdmin())
+		{
+			$member = Users::model()->findByPk($uid);
+			$member->confirmed = 1;
+			if($member->save())
+			{
+				Yii::app()->user->setFlash('success', '<strong>Sukces.</strong> Zgłoszenie zostało zaakceptowane.');
+			}
+			else
+			{
+				Yii::app()->user->setFlash('error', '<strong>Błąd!</strong> Brak zgłoszenia dla użytkownika o podanym ID.');
+			}
+			$this->redirect(array('groups/index'));
+		}
+		else
+		{
+			Yii::app()->user->setFlash('error', '<strong>Błąd!</strong> Nie masz uprawnień do korzystania z tej funkcji.');
+			$this->redirect(array('groups/index'));
+		}
+	}
+	
+	public function actionRejectApplication($uid)
+	{
+		if(Yii::app()->user->isGroupAdmin())
+		{
+			$member = Users::model()->findByPk($uid);
+			$member->group_id = null;
+			if($member->save())
+			{
+				Yii::app()->user->setFlash('warning', '<strong>Uwaga!</strong> Zgłoszenie zostało odrzucone.');
+			}
+			else
+			{
+				Yii::app()->user->setFlash('error', '<strong>Błąd!</strong> Brak zgłoszenia dla użytkownika o podanym ID.');
+			}
+			$this->redirect(array('groups/index'));
+		}
+		else
+		{
+			Yii::app()->user->setFlash('error', '<strong>Błąd!</strong> Nie masz uprawnień do korzystania z tej funkcji.');
+			$this->redirect(array('groups/index'));
+		}
 	}
 
 	/**

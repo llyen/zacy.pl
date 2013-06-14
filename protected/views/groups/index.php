@@ -29,4 +29,20 @@ $this->menu=array(
 <p><?php echo CHtml::link('Stwórz', array('groups/create')); ?> własną grupę lub <?php echo CHtml::link('dołącz', array('groups/join')); ?> do istniejącej.</p>
 <?php else: ?>
 <h3>Członkowie grupy</h3>
+<table>
+	<thead>
+		<tr>
+			<th style="width: 200px;">Nazwa użytkownika</th>
+		</tr>
+	</thead>
+	<tbody>
+<?php
+	$this->widget('zii.widgets.CListView', array(
+		'dataProvider'=>$dataProvider,
+		'itemView'=>'_view',
+		'summaryText'=>'',
+	));
+?>
+	</tbody>
+</table>
 <?php endif; ?>
