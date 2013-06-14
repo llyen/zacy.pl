@@ -56,22 +56,24 @@ class PostsController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+	public function actionCreate($tid)
 	{
 		$model=new Posts;
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['Posts']))
 		{
 			$model->attributes=$_POST['Posts'];
+			$model->thread_id = $tid;
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array("threads/view/$tid"));
 		}
 
 		$this->render('create',array(
 			'model'=>$model,
+			'tid'=>$tid,
 		));
 	}
 
@@ -85,13 +87,13 @@ class PostsController extends Controller
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['Posts']))
 		{
 			$model->attributes=$_POST['Posts'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array("threads/view/$model->thread_id"));
 		}
 
 		$this->render('update',array(

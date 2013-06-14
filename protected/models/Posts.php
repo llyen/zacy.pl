@@ -74,7 +74,7 @@ class Posts extends CActiveRecord
 			'id' => 'ID',
 			'thread_id' => 'Thread',
 			'author_id' => 'Autor',
-			'content' => 'Treść',
+			'content' => '',
 			'create_date' => 'Create Date',
 			'update_date' => 'Update Date',
 		);

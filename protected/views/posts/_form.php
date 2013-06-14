@@ -6,47 +6,18 @@
 
 <div class="form">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'posts-form',
-	'enableAjaxValidation'=>false,
-)); ?>
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+		'id'=>'posts-form',
+		'enableAjaxValidation'=>true,
+	        'type'=>'vertical',
+	));
+?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
-	<?php echo $form->errorSummary($model); ?>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'thread_id'); ?>
-		<?php echo $form->textField($model,'thread_id'); ?>
-		<?php echo $form->error($model,'thread_id'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'author_id'); ?>
-		<?php echo $form->textField($model,'author_id'); ?>
-		<?php echo $form->error($model,'author_id'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'content'); ?>
-		<?php echo $form->textArea($model,'content',array('rows'=>6, 'cols'=>50)); ?>
-		<?php echo $form->error($model,'content'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'create_date'); ?>
-		<?php echo $form->textField($model,'create_date'); ?>
-		<?php echo $form->error($model,'create_date'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'update_date'); ?>
-		<?php echo $form->textField($model,'update_date'); ?>
-		<?php echo $form->error($model,'update_date'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+	<?php echo $form->errorSummary($model); ?>	
+	<?php echo $form->html5EditorRow($model, 'content', array('class'=>'span3', 'rows'=>8, 'height'=>'200', 'options'=>array('color'=>true))); ?>
+	
+	<div class="form-actions">
+		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>($model->isNewRecord) ? 'Utwórz' : 'Zapisz')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

@@ -14,7 +14,7 @@ $this->menu=array(
 ?>
 
 <h3>Forum</h3>
-<table>
+<table class="forum">
 	<thead>
 		<tr>
 			<th style="width: 300px;">Temat</th>

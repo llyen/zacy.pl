@@ -9,13 +9,13 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Posts', 'url'=>array('index')),
-	array('label'=>'Create Posts', 'url'=>array('create')),
-	array('label'=>'View Posts', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage Posts', 'url'=>array('admin')),
+	array('label'=>'FORUM'),
+	array('label'=>'Tematy', 'url'=>array('threads/index'), 'icon'=>'list'),
+	array('label'=>'Nowy temat', 'url'=>array('threads/create'), 'icon'=>'comment'),
+        array('label'=>'Powrót', 'url'=>array("threads/view/$model->thread_id"), 'icon'=>'share-alt'),
 );
 ?>
 
-<h1>Update Posts <?php echo $model->id; ?></h1>
+<h3>Edytuj post</h3>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
